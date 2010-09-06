@@ -83,6 +83,13 @@ class Event {
 	 * @access	private
 	 */
 	private $tag;
+	
+	/** Attendance status of this event.
+	 *
+	 * @var integer
+	 * @access	private
+	 */
+	private $status;
 
 	/** Possible attendance statuses.
 	 *
@@ -111,7 +118,7 @@ class Event {
 	 */
 	public function __construct($id, $title, array $artists, Venue $venue,
 								$startDate, $description, $images, $url,
-								$attendance, $reviews, $tag){
+								$attendance, $reviews, $tag, $status){
 		$this->id          = $id;
 		$this->title       = $title;
 		$this->artists     = $artists;
@@ -123,6 +130,7 @@ class Event {
 		$this->attendance  = $attendance;
 		$this->reviews     = $reviews;
 		$this->tag         = $tag;
+		$this->status	   = $status;
 	}
 
 	/** Returns the ID of this event.
@@ -205,6 +213,15 @@ class Event {
 	 */
 	public function getAttendance(){
 		return $this->attendance;
+	}
+	
+	/** Returns the attendance status of the user.
+	 *
+	 * @return	integer	Attendance status.
+	 * @access	public
+	 */
+	public function getStatus(){
+		return $this->status;
 	}
 
 	/** Returns number of reviews of this event.
@@ -345,6 +362,8 @@ class Event {
 					Util::toString($image);
 			}
 		}
+		
+		$attributes = $xml->attributes();
 
 		return new Event(
 			Util::toInteger($xml->id),
@@ -357,7 +376,8 @@ class Event {
 			Util::toString($xml->url),
 			Util::toInteger($xml->attendance),
 			Util::toInteger($xml->reviews),
-			Util::toString($xml->tag)
+			Util::toString($xml->tag),
+			Util::toInteger($attributes["status"])
 		);
 	}
 }
