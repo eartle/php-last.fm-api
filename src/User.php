@@ -330,6 +330,10 @@ class User extends Media {
 			'limit' => $limit,
 			'page'  => $page
 		));
+		
+		// Set the default time zone to the user's timezone so that the timestamps are correct
+		$aEventAttributes = $xml->attributes();
+		date_default_timezone_set($aEventAttributes["usertimezone"]);
 
 		$events = array();
 
