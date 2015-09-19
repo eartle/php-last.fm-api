@@ -34,7 +34,7 @@ final class CurlCaller extends Caller {
 	 */
 	private function __construct(){
 		$this->curl  = curl_init();
-		//$this->cache = new DiskCache();
+		$this->cache = new DiskCache();
 
 		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($this->curl, CURLOPT_USERAGENT, "PHP last.fm API (PHP/" . phpversion() . ")");
@@ -124,7 +124,7 @@ final class CurlCaller extends Caller {
 		}
 
 		/* Create SimpleXMLElement from response. */
-		$response = new SimpleXMLElement($response);
+		$response = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 		/* Return response or throw an error. */
 		if(Util::toString($response['status']) === 'ok'){

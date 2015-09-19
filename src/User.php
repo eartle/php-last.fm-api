@@ -333,7 +333,7 @@ class User extends Media {
 		
 		// Set the default time zone to the user's timezone so that the timestamps are correct
 		$aEventAttributes = $xml->attributes();
-		date_default_timezone_set($aEventAttributes["usertimezone"]);
+		date_default_timezone_set(timezone_name_from_abbr($aEventAttributes["usertimezone"]));
 
 		$events = array();
 
@@ -484,6 +484,15 @@ class User extends Media {
 		}
 
 		return $shouts;
+	}
+	
+	public static function shout($user, $message, $session){
+		$xml = CallerFactory::getDefaultCaller()->signedCall('user.shout', array(
+			'user' => $user,
+			'message' => $message
+		), $session, 'POST');
+
+		return $xml;
 	}
 
 	/** Get the top albums listened to by a user. You can stipulate a time period. Sends the overall chart by default.

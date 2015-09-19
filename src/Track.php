@@ -389,6 +389,28 @@ class Track extends Media {
 
 		return $xml;
 	}
+	
+	/** Scrobble.
+	 *
+	 * @param	string	$artist		An artist name. (Required)
+	 * @param	string	$track		A track name. (Required)
+	 * @param	Session	$session	A session obtained by {@link de.felixbruns.lastfm.Auth#getSession Auth::getSession} or {@link de.felixbruns.lastfm.Auth#getMobileSession Auth::getMobileSession}. (Required)
+	 * @param	string	$album		A album name. (Optional)
+	 *
+	 * @static
+	 * @access	public
+	 * @throws	Error
+	 */
+	public static function scrobble($artist, $track, $time, $session, $album = ''){
+		$xml = CallerFactory::getDefaultCaller()->signedCall('track.scrobble', array(
+			'artist' => $artist,
+			'track'  => $track,
+			'album' => $album,
+			'timestamp' => $time,
+		), $session, 'POST');
+
+		return $xml;
+	}
 
 	/** Remove a user's tag from a track.
 	 *

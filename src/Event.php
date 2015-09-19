@@ -116,7 +116,7 @@ class Event {
 	 *
 	 * @access	public
 	 */
-	public function __construct($id, $title, array $artists, Venue $venue,
+	public function __construct($id, $title, array $artists, $venue,
 								$startDate, $description, $images, $url,
 								$attendance, $reviews, $tag, $status){
 		$this->id          = $id;
